@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0 maximum-scale=1.0"/>
+    <!-- META -->
+    <!--<meta property="og:title" content="">-->
+    <!--<meta property="og:description" content="">-->
+    <!--<meta property="og:image" content="https://geoxc-apps.bd.esri.com/assets/GeoXC.png">-->
+    <!--<meta property="og:url" content="https://geoxc-apps.bd.esri.com/.../index.html">-->
+    <!-- ICON -->
+    <link rel="icon" href="./assets/favicon.ico" sizes="32x32" type="image/vnd.microsoft.icon">
+    <!-- TITLE -->
+    <title class="application-title"></title>
+    
+    <!-- CHARTJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.4.0/chartjs-plugin-annotation.min.js" integrity="sha512-HrwQrg8S/xLPE6Qwe7XOghA/FOxX+tuVF4TxbvS73/zKJSs/b1gVl/P4MsdfTFWYFYg/ISVNYIINcg35Xvr6QQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- CALCITE -->
+    <!-- https://github.com/Esri/calcite-components/blob/v1.0.0-beta.77/package.json -->
+    <!-- https://developers.arcgis.com/calcite-design-system/icons/?library=Calcite%20UI&version=3.18.3 -->
+    <script src="https://js.arcgis.com/calcite-components/1.0.0-beta.80/calcite.esm.js" type="module"></script>
+    <link href="https://js.arcgis.com/calcite-components/1.0.0-beta.80/calcite.css" rel="stylesheet"/>
+    
+    <!-- ArcGIS API for JavaScript-->
+    <link href="https://js.arcgis.com/4.23/@arcgis/core/assets/esri/themes/dark/main.css" rel="stylesheet"/>
+    <script src="https://js.arcgis.com/4.23/"></script>
+    
+    <!-- APPLICATION -->
+    <link rel="stylesheet" type="text/css" href="./css/app-base.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/application.css">
+    <script type="module" src="./js/APL/SignIn.js"></script>
+    <script type="module" src="./js/Application.js"></script>
+  </head>
+  <body class="calcite-theme-dark calcite-theme-app">
+    <calcite-shell dir="ltr">
+      
+      <!-- HEADER -->
+      <header class="content-row" slot="header">
+        <h2 class="application-title"></h2>
+        
+        <div class="content-row">
+          
+          <div id="search-container"></div>
+          
+          <apl-sign-in id="sign-in"></apl-sign-in>
+          
+          <calcite-action-bar class="content-row" expand-disabled="true">
+            <calcite-action id="app-share-action" appearance="clear" scale="m" title="share current options..." text="share current options" icon="link"></calcite-action>
+            <calcite-action id="app-details-action" appearance="clear" scale="m" title="app details..." text="app details" icon="information"></calcite-action>
+          </calcite-action-bar>
+          
+          <calcite-alert id="app-share-alert" icon="" auto-dismiss="" auto-dismiss-duration="medium" scale="m" color="green" aria-hidden="true" role="alert">
+            <div slot="message">
+              Shareable link has been copied to the clipboard.
+            </div>
+            <calcite-link id="app-share-link" slot="link" href="#" target="_blank" role="link" title="open in new tab">
+              open in new tab
+            </calcite-link>
+          </calcite-alert>
+        
+        </div>
+      </header>
+      
+      <!-- LEFT -->
+      <calcite-shell-panel slot="primary-panel" position="start" width-scale="m" collapsed="true">
+        
+        <calcite-action-bar slot="action-bar">
+          <calcite-action text="Layer" title="HYCOM Layer..." icon="analysis" class="toggle-action" data-toggle="layer"></calcite-action>
+          <calcite-action text="Places" title="Places..." icon="bookmark" class="toggle-action" data-toggle="places"></calcite-action>
+        </calcite-action-bar>
+        
+        <calcite-panel heading="HYbrid Coordinate Ocean Model" summary="7 day forecast and 30 day hindcast" class="toggle-panel" data-toggle="layer">
+          <calcite-action slot="header-actions-end" icon="x" title="close panel" class="toggle-close" data-toggle="layer"></calcite-action>
+          <calcite-accordion>
+            
+            <!-- LAYER ITEMS -->
+            <calcite-accordion-item icon="layers" item-title="ArcGIS Living Atlas Items" item-subtitle="learn more about the data">
+              <!-- ITEMS LIST -->
+              <ul id="layer-item-list">
+                <li>
+                  <calcite-link icon-end="launch" title="view details..." href="https://www.arcgis.com/home/item.html?id=9890130e6c9d430a88c3905947e8a867" target="_blank">Sea Water Temperature</calcite-link>
+                </li>
+                <li>
+                  <calcite-link icon-end="launch" title="view details..." href="https://www.arcgis.com/home/item.html?id=a6f2ca97544b45f69daea38668ccbdcf" target="_blank">Ocean Current Vectors</calcite-link>
+                </li>
+                <li>
+                  <calcite-link icon-end="search" title="view all HYCOM items..." href="https://livingatlas.arcgis.com/en/browse/?q=hycom#d=2&q=hycom&type=layers" target="_blank">All HYCOM Layer Items</calcite-link>
+                </li>
+              </ul>
+            </calcite-accordion-item>
+            
+            <!-- VARIABLES -->
+            <calcite-accordion-item id="variables-panel" icon="list-radio" item-title="Thematic Display" item-subtitle="data variables" active>
+              <calcite-radio-group id="rf-list" appearance="outline" layout="vertical" scale="m" width="full"></calcite-radio-group>
+            </calcite-accordion-item>
+            
+            <!-- LEGEND -->
+            <calcite-accordion-item id="legends-panel" icon="legend" item-title="Legend" item-subtitle="describe thematic content">
+              <div id="legend-container"></div>
+            </calcite-accordion-item>
+            
+            <!-- TIME -->
+            <calcite-accordion-item id="time-panel" icon="clock" item-title="Time" item-subtitle="interval" active>
+              <div id="time-slider-container"></div>
+            </calcite-accordion-item>
+            
+            <!-- DEPTH -->
+            <calcite-accordion-item id="depth-panel" icon="switch" item-title="Water Depth" item-subtitle="in meters" active>
+              <div id="depth-slider-container"></div>
+            </calcite-accordion-item>
+          
+          </calcite-accordion>
+        </calcite-panel>
+        
+        <calcite-panel heading="Places" class="toggle-panel" data-toggle="places" hidden>
+          <calcite-icon slot="icon" icon="bookmark"></calcite-icon>
+          <calcite-action slot="header-actions-end" icon="x" title="close panel" class="toggle-close" data-toggle="places"></calcite-action>
+          <div id="bookmarks-container"></div>
+        </calcite-panel>
+      
+      </calcite-shell-panel>
+      
+      <!-- CENTER -->
+      <div id="center-container" class="content-col content-fill">
+        <div id="view-container">
+          <calcite-loader id="view-updating" type="indeterminate" scale="s"></calcite-loader>
+        </div>
+        <calcite-block heading="Values Along Line" summary="data values along line" collapsible hidden>
+          <calcite-icon slot="icon" icon="graph-time-series"></calcite-icon>
+          <div slot="control">
+            <calcite-button id="set-line-btn" appearance="outline" icon-start="blank" icon-end="line" width="full">set line</calcite-button>
+          </div>
+          <div class="chart-container content-col content-static">
+            <canvas id="profile-chart" class="chart-node"></canvas>
+          </div>
+        </calcite-block>
+      </div>
+      
+      <!-- RIGHT -->
+      <calcite-shell-panel slot="contextual-panel" position="end" width-scale="s" collapsed="true">
+        <calcite-action-bar slot="action-bar">
+          <calcite-action text="Depth Values" title="get data values at multiple depths..." icon="switch" class="toggle-action" data-toggle="analysis"></calcite-action>
+        </calcite-action-bar>
+        <calcite-panel heading="Values At Depths" summary="data values at depths" class="content-col content-fill">
+          <calcite-action slot="header-actions-end" icon="x" title="close panel" class="toggle-close" data-toggle="analysis"></calcite-action>
+          
+          <div class="content-col content-static margin-m">
+            <calcite-button id="set-location-btn" appearance="outline" icon-start="blank" icon-end="point" width="full">set location</calcite-button>
+          </div>
+          <div class="chart-container content-col content-fill padding-s">
+            <canvas id="depth-chart" class="chart-node"></canvas>
+          </div>
+          
+        </calcite-panel>
+      </calcite-shell-panel>
+      
+      <!-- NOTICES ADN ALERTS -->
+      <calcite-notice id="app-notice" icon="" scale="m" width="auto" dismissible="" color="red">
+        <div slot="title"></div>
+        <div slot="message"></div>
+      </calcite-notice>
+    
+    </calcite-shell>
+    
+    <!-- LOADER -->
+    <calcite-loader id="app-loader" active="true" type="indeterminate" scale="l"></calcite-loader>
+    
+    <!-- APP DETAILS MODAL -->
+    <calcite-modal id="app-details-modal" color="blue" background-color="grey" scale="m" width="m" role="dialog" aria-labelledby="app-modal-title">
+      <h3 slot="header" id="app-modal-title" class="application-title"></h3>
+      <div slot="content" class="application-description"></div>
+      <div slot="secondary" class="margin-m">
+        <calcite-label layout="inline">
+          <span>hide on startup</span>
+          <calcite-checkbox id="hide-startup-checkbox"></calcite-checkbox>
+        </calcite-label>
+      </div>
+      <calcite-button id="app-details-ok-btn" slot="primary" width="full" hidden>OK</calcite-button>
+    </calcite-modal>
+    
+    <!-- FEATURE ITEM TEMPLATE -->
+    <template id="feature-item-template">
+      <calcite-pick-list-item
+        label=""
+        description=""
+        value=""
+        aria-checked="false"
+        role="menuitemcheckbox"
+        icon="circle"
+        disabled="false">
+        <calcite-action
+          slot="actions-end"
+          label=""
+          appearance="clear"
+          scale="s"
+          icon="information">
+        </calcite-action>
+      </calcite-pick-list-item>
+    </template>
+  
+  </body>
+</html>

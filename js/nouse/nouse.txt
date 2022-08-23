@@ -1,0 +1,41 @@
+/*const windsLayer = view.map.layers.find(layer => { return (layer.title === "Winds"); });
+       windsLayer.load().then(() => {
+       console.info(windsLayer);
+
+       windsLayer.set({
+       effect: "drop-shadow(3px, 3px, 5px)  brightness(180%)",
+       //blendMode: 'plus',
+       renderer: {
+       type: "flow",
+       flowRepresentation: "flow-to",
+       density: 2,
+       flowSpeed: 5,
+       trailWidth: 1.5,
+       trailLength: 20,
+       visualVariables: [
+       {
+       type: "color",
+       field: "Magnitude",
+       stops: [
+       {value: 0, color: 'rgba(177,216,241,0.2)'},
+       {value: 4, color: 'rgba(119,189,231,0.4)'},
+       {value: 8, color: 'rgba(119,189,231,0.8)'},
+       {value: 20, color: 'rgba(255,149,0,1.0)'}
+       ]
+       },
+       {
+       type: "size",
+       field: "Magnitude",
+       minDataValue: 0,
+       maxDataValue: 5,
+       minSize: 1.0,
+       maxSize: 2.5
+       }
+       ]
+       }
+       });
+
+
+       this.initializeLocationDetails({view, windsLayer});
+
+       });*/
